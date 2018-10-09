@@ -1,0 +1,1 @@
+先安裝好node、json-server 使用npm install安裝  
