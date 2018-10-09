@@ -21,11 +21,12 @@ server.use(middlewares)
 
 // 获取db数据
 const db = dbHandler('./data')
-
-server.use(jsonServer.rewriter(rewriterHandler(db)))
+let rule = jsonServer.rewriter(rewriterHandler(db))
+server.use(rule)
 
 // Use router
-server.use(jsonServer.router(db))
+let route = jsonServer.router(db)
+server.use(route)
 
 server.listen(port, () => {
   console.log('JSON Server is running on', port)

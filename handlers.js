@@ -22,10 +22,10 @@ function _findSync (startAbsolutePath) {
 
 /**
  * 将路径转换为对象
- * ep: 'user/login.json' => { user: { login: data } }
+ * ep: 'user\login.json' => { user: { login: data } }
  */
 function _handlePathToObj (_p) {
-  const arr = _p.replace('.json', '').split('/')
+  const arr = _p.replace('.json', '').replace('\\','/').split('/')
   return {[arr.join('_')]: require(path.join(__dirname, 'data', _p))}
 }
 
@@ -39,7 +39,8 @@ function dbHandler (startPath) {
   filePaths.forEach(_p => {
     // 获取相对路径
     const relativePath = path.relative(path.join(__dirname, 'data'), _p)
-    db = _.merge(db, _handlePathToObj(relativePath))
+    let pathtoobj = _handlePathToObj(relativePath)
+    db = _.merge(db, pathtoobj)
   })
 
   return db
